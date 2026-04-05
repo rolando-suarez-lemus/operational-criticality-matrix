@@ -1,0 +1,235 @@
+.app-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 32px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, hsla(190, 100%, 8%, 1) 0%, hsla(200, 90%, 12%, 1) 50%, hsla(210, 85%, 15%, 1) 100%);
+  color: rgba(255, 255, 255, 0.95);
+  font-family: 'Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', sans-serif;
+}
+
+.app-header {
+  text-align: center;
+  margin-bottom: 48px;
+  padding: 48px 32px;
+  background: rgba(30, 60, 114, 0.25);
+  backdrop-filter: blur(16px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  position: relative;
+  overflow: hidden;
+}
+
+.app-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+}
+
+.app-header h1 {
+  margin: 0 0 16px 0;
+  font-size: 3rem;
+  font-weight: 800;
+  letter-spacing: -1.2px;
+  background: linear-gradient(135deg, #00d4ff 0%, #0099ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subtitle {
+  margin: 0 0 24px 0;
+  font-size: 1.125rem;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.credits {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.65);
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.credits p {
+  margin: 6px 0;
+}
+
+.credits strong {
+  color: #00d4ff;
+}
+
+.app-main {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.visualization-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+.chart-panel,
+.chart-panel-full {
+  background: rgba(20, 50, 90, 0.3);
+  backdrop-filter: blur(16px);
+  border-radius: 16px;
+  padding: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
+  position: relative;
+}
+
+.chart-panel::before,
+.chart-panel-full::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+  border-radius: 16px 16px 0 0;
+}
+
+.chart-panel h2,
+.chart-panel-full h2 {
+  margin-top: 0;
+  margin-bottom: 8px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.panel-description {
+  margin: 0 0 24px 0;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-style: italic;
+}
+
+.table-section {
+  background: rgba(20, 50, 90, 0.3);
+  backdrop-filter: blur(16px);
+  border-radius: 16px;
+  padding: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
+  position: relative;
+}
+
+.table-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+  border-radius: 16px 16px 0 0;
+}
+
+.table-section h2 {
+  margin-top: 0;
+  margin-bottom: 24px;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.info-section {
+  background: rgba(20, 50, 90, 0.3);
+  backdrop-filter: blur(16px);
+  border-radius: 16px;
+  padding: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
+  position: relative;
+}
+
+.info-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+  border-radius: 16px 16px 0 0;
+}
+
+.info-section h3 {
+  margin-top: 0;
+  margin-bottom: 24px;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.formulas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.formula-box {
+  background: rgba(0, 212, 255, 0.08);
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.formula-box h4 {
+  margin: 0 0 12px 0;
+  color: #00d4ff;
+  font-size: 1rem;
+}
+
+.formula-box p {
+  margin: 8px 0;
+  font-family: 'JetBrains Mono', monospace;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+}
+
+.formula-note {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.65);
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+}
+
+.model-source {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-style: italic;
+  margin-top: 24px;
+}
+
+@media (max-width: 1024px) {
+  .visualization-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-container {
+    padding: 16px;
+  }
+
+  .app-header {
+    padding: 24px;
+  }
+
+  .app-header h1 {
+    font-size: 1.8rem;
+  }
+}
