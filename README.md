@@ -1,195 +1,167 @@
-# Operational Criticality Matrix
+# Matriz de Criticidad Operacional: Estructura de Decisión en Mantenimiento
 
-Advanced **equipment criticality assessment** and **operational availability analysis** tool for industrial asset management. Implements ISO 55001 standard frameworks and RCM methodology.
+## Problema Operativo
 
----
+En portfolios de múltiples activos, la diferenciación entre equipos por riesgo es incompleta sin considerar conjuntamente la probabilidad de falla y su impacto operacional. Esto genera distribución ineficiente de recursos: inversión en prevención de equipos de bajo riesgo mientras equipos críticos operan sin monitoreo.
 
-## Overview
-
-This tool provides enterprise-grade analytics for:
-
-- **Criticality Matrix**: 2D risk assessment (Impact vs Probability)
-- **Operational Availability (A₀)**: Quantifies equipment performance via MTBF/MTTR metrics
-- **Bathtub Curve**: Equipment lifecycle failure pattern visualization
-- **Maintenance Planning**: Data-driven prioritization for preventive/predictive strategies
-
-### Core Mathematical Models
+La disponibilidad operacional (A₀) estructurada bajo criticidad permite asignar estrategia distinta según riesgo:
 
 $$A_0 = \frac{MTBF}{MTBF + MTTR}$$
 
-Where:
-- **A₀** = Operational availability (fraction of time equipment is operational)
-- **MTBF** = Mean Time Between Failures (hours)
-- **MTTR** = Mean Time To Repair (hours)
+Donde:
+- **MTBF** = Tiempo medio entre fallos (horas)
+- **MTTR** = Tiempo medio de reparación (horas)
+- **A₀** = Fracción de tiempo que el equipo está disponible operacionalmente
 
-$$C_i = \text{Impact Score} \times \text{Probability Score}$$
+La criticidad se calcula:
+$$C_i = \text{Impacto} \times \text{Probabilidad}$$
 
-Criticality index for maintenance task prioritization.
+Esto estructura cómo concentrar inversión en **prevención predictiva** en equipos críticos, mientras equipos de bajo riesgo operan bajo política **run-to-failure**.
 
----
-
-## Key Features
-
-### 1. **Equipment Criticality Matrix**
-Interactive scatter plot mapping failure probability against production impact. Color-coded by criticality tier (Critical → Low).
-
-### 2. **Operational Availability Dashboard**
-Performance metrics for all equipment:
-- Current availability percentage
-- Annual downtime forecast
-- Trend analysis
-
-### 3. **Bathtub Curve Analysis**
-Equipment lifecycle visualization:
-- **Burn-in** (0-5%): Manufacturing defect screening
-- **Normal** (10-90%): Stable operation phase
-- **Wear-out** (85-100%): Age-related degradation
-
-### 4. **Equipment Inventory**
-Comprehensive table with:
-- MTBF/MTTR metrics
-- Calculated availability
-- Criticality ranking
-- Department/location tracking
 
 ---
 
-## Technical Stack
+## Estructura del Análisis
 
-- **Frontend**: React 19.2 + TypeScript 5.9
-- **Build & Dev**: Vite 5.0 + HMR
-- **Visualization**: Recharts 3.8 (Scatter, Bar, Line charts)
-- **Styling**: CSS Grid + Glassmorphism (Lumina UI Protocol ID-LUM-001)
-- **Validation**: Zod
+### 1. Matriz de Criticidad (Impacto vs Probabilidad)
+Scatter 2D que posiciona cada equipo. Los cuadrantes definen estrategia:
+
+| Cuadrante | Impacto | Probabilidad | Estrategia |
+|-----------|---------|--------------|-----------|
+| **Crítico** | Alto | Alto | Predictiva + redundancia |
+| **Alto** | Alto/Medio | Medio/Bajo | Preventiva sistemática |
+| **Medio** | Bajo/Medio | Medio | Condición-basada (CBM) |
+| **Low** | Bajo | Bajo | Run-to-failure |
+
+### 2. Disponibilidad Operacional (A₀)
+Métrica cuantificable de performance:
+
+$$\text{Tiempo inactividad anual} = (1 - A_0) \times 8760 \text{ horas}$$
+
+Permite comparar equipo A: A₀=95% vs equipo B: A₀=98% en términos de horas/año fuera de servicio.
+
+### 3. Ciclo de Vida (Bathtub Curve)
+Estructura de confiabilidad según fase:
+- **Mortalidad Infantil (0-5%)**: Defectos de fabricación; inspección entrada crítica
+- **Operación Normal (10-90%)**: Fallas aleatorias; mantenimiento preventivo por intervalo
+- **Desgaste (85-100%)**: Fatiga material; cambio de componentes preventivo
+
+### 4. Inventario de Activos
+Tabla consolidada: MTBF, MTTR, A₀ calculada, ranking de criticidad. Permite auditar si inversión preventiva correlaciona con reducción de MTTR o con aumento de MTBF.
 
 ---
 
-## Installation & Setup
+## Asignación de Recursos
 
-### Prerequisites
-- Node.js 20+
+### Equipos Críticos (C_i > 60)
+- Inversión en monitoreo continuo (sensores, telemetría)
+- Almacén de repuestos disponible 24/7
+- MTTR objetivo: < 4 horas
+- Meta A₀: ≥ 99%
 
-### Development
+### Equipos Alto Riesgo (C_i 30-60)
+- Inspecciones mensuales sistemáticas
+- Mantenimiento preventivo por intervalo fijo
+- MTTR objetivo: < 12 horas
+- Meta A₀: ≥ 95%
+
+### Equipos Bajo Riesgo (C_i < 30)
+- Inspección visual a demanda
+- Reemplazo reactivo; no requiere stock permanente
+- No hay MTTR objetivo formal
+- A₀ natural, sin inversión
+
+---
+
+## Formato de Datos
+
+Equipo incluye:
+
+```typescript
+interface Equipment {
+  id: string
+  code: string
+  name: string
+  mtbf: number  // horas
+  mttr: number  // horas
+  impactScore: number  // 1-10
+  probabilityScore: number  // 1-10
+  department: string
+}
+```
+
+Criticidad calculada automáticamente: **C_i = impactScore × probabilityScore**
+
+---
+
+## Arquitectura
+
+```
+src/
+├── App.tsx
+├── components/
+│   ├── CriticalityMatrix.tsx
+│   ├── AvailabilityAnalysis.tsx
+│   ├── BathtubCurve.tsx
+│   └── EquipmentTable.tsx
+└── data/sampleEquipment.ts
+```
+
+---
+
+## Stack Técnico
+
+- **React 19.2** + TypeScript 5.9
+- **Vite 5.0** + HMR
+- **Recharts 3.8**: Scatter, bar, line charts
+- **CSS Grid** + Glasmorphism
+- **Zod**: Validación
+
+---
+
+## Instalación
 
 ```bash
 npm install
 npm run dev
-```
+# http://localhost:5173
 
-Runs at `http://localhost:5173` with hot reload.
-
-### Production Build
-
-```bash
 npm run build
 npm run preview
 ```
 
 ---
 
-## Data Model
+## Impacto en Decisión Operacional
 
-### Equipment Interface
+### Diferenciación de Inversión
+Sin criticidad estructurada, presupuesto de mantenimiento se distribuye por igual. Con matriz, la inversión se concentra donde costo de falla es mayor.
 
-```typescript
-interface Equipment {
-  id: string
-  code: string // Equipment identifier
-  name: string
-  description: string
-  mtbf: number // Mean Time Between Failures (hours)
-  mttr: number // Mean Time To Repair (hours)
-  criticality: 'critical' | 'high' | 'medium' | 'low'
-  department: string
-  impactScore: number // 1-10: Production impact
-  probabilityScore: number // 1-10: Failure likelihood
-}
-```
+### Predicción de Disponibilidad
+A₀ permite forecasting: si equipo tiene MTBF=800h y MTTR=20h, es posible predecir inactividad anual y planificar reemplazos o redundancia técnica.
+
+### Auditoría Post-Intervención
+Comparar C_i antes/después de intervención (cambio de componentes, rediseño, capacitación operacional) cuantifica si mejora fue efectiva o superficial.
 
 ---
 
-## Sample Dataset
+## Referencias
 
-Pre-configured with 8 equipment items spanning:
-- **Process**: Pumps, Motors, Valves
-- **Utilities**: Cooling systems, Heat exchangers
-- **Electrical**: VFD drives, Transformers
-- **Instrumentation**: Sensors, Filters
-
-Reflects real-world industrial asset portfolios.
+- **ISO 55001**: Asset Management
+- **RCM Standard**: ISO/IEC 60812; MIL-STD-3034
+- **Knezevic, J.** (1997): Reliability, Maintainability & Supportability Engineering
+- **Weibull Analysis**: Equipment lifecycle modeling
 
 ---
 
-## Architecture
+## Equipo
 
-```
-src/
-├── App.tsx                       # Main application
-├── components/
-│   ├── CriticalityMatrix.tsx     # Risk assessment chart
-│   ├── AvailabilityAnalysis.tsx  # Performance metrics
-│   ├── BathtubCurve.tsx          # Lifecycle analysis
-│   └── EquipmentTable.tsx        # Inventory view
-├── data/
-│   └── sampleEquipment.ts        # Reference dataset
-└── types.ts                      # TypeScript interfaces
-```
+**Rolando Suárez Lemus**  
+Ingeniero Mecánico | Especialista en Gestión de Activos y Confiabilidad  
+ISO 55000, RCM, Data Analytics
+
+GitHub: [@rolando-suarez-lemus](https://github.com/rolando-suarez-lemus)
 
 ---
 
-## Mathematical Framework
-
-### Availability Calculation
-
-$$A_0 = \frac{MTBF}{MTBF + MTTR}$$
-
-**Annual Downtime** = $(1 - A_0) \times 8760$ hours
-
-### Criticality Classification
-
-| Criticality | Impact × Probability | Maintenance Strategy |
-|-------------|----------------------|----------------------|
-| **Critical** | > 60 | Predictive + redundancy |
-| **High** | 30-60 | Preventive + monitoring |
-| **Medium** | 10-30 | Condition-based |
-| **Low** | < 10 | Run-to-failure |
-
----
-
-## References & Standards
-
-- **ISO 55001**: Asset Management requirements and guidance
-- **RCM Standard**: Reliability-Centered Maintenance (MIL-STD-3034)
-- **Knezevic, J. (1997)**: "Reliability, Maintainability & Supportability Engineering"
-- **Bathtub Curve Model**: Weibull analysis for equipment lifecycle
-
----
-
-## Credits & Attribution
-
-### Development Team
-
-- **Rolando Suárez Lemus**
-  - Mechanical Engineer
-  - Specialist: Asset Management, Operational Reliability, RCM
-  - ISO 55000 & Data Analytics
-  - Author & Lead Developer
-
-- **GitHub Copilot**
-  - AI Assistant for Code Generation
-  - Claude Haiku 4.5 Model
-
-### Design Protocol
-
-- **Lumina UI Aesthetics Engine (ID-LUM-001)**: Premium glassmorphism + industrial color palette
-
----
-
-## License
-
-Provided as-is for industrial asset management and maintenance planning.
-
----
-
-**Last Updated**: April 5, 2026  
-**Version**: 1.0.0
+**Versión**: 1.0.0 | Abril 2026
