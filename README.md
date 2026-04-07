@@ -147,10 +147,11 @@ Comparar C_i antes/después de intervención (cambio de componentes, rediseño, 
 
 ## Referencias
 
-- **ISO 55001**: Asset Management
-- **RCM Standard**: ISO/IEC 60812; MIL-STD-3034
-- **Knezevic, J.** (1997): Reliability, Maintainability & Supportability Engineering
-- **Weibull Analysis**: Equipment lifecycle modeling
+- **ISO 55001**: Asset Management — Management systems — Requirements
+- **ISO/IEC 60812**: Failure modes and effects analysis (FMEA) and criticality analysis
+- **MIL-STD-3034**: General requirements for reliability engineering
+- **Knezevic, J.** (1997): Reliability, Maintainability and Supportability Engineering, McGraw-Hill
+- **Modarres, M.** (2006): Risk Analysis in Engineering: Techniques and Their Applications, Marcel Dekker
 
 ---
 
